@@ -22,9 +22,10 @@ namespace HangMan_working_version_
             var chosenWord = words[new Random().Next(0, words.Length - 1)];
             var letters = new List<string>();
             var validCharacters = new Regex("^[a-z]$");//Matches any string
-            var tries = 5;
-            while (tries != 0)
+            var tries = 4;
+            while (tries > 0)
             {
+                DrawStage(tries);
                 var charactersLeft = 0;
                 foreach (var character in chosenWord)
                 {
@@ -44,21 +45,20 @@ namespace HangMan_working_version_
                 {
                     break;
                 }
-
-                Console.Write(" Type in a letter: ");
+                Console.Write("Type in a letter: ");
                 var key = Console.ReadKey().Key.ToString().ToLower();
                 Console.WriteLine(string.Empty);
                 if (!validCharacters.IsMatch(key))
                 {
-                    Console.WriteLine($" The key you entered is invalid");
-                    Thread.Sleep(1000);
+                    Console.WriteLine($"The key you entered is invalid");
+                    Thread.Sleep(500);
                     Console.Clear();
                     continue;
                 }
                 if (letters.Contains(key))
                 {
-                    Console.WriteLine(" This letter was already entered");
-                    Thread.Sleep(1000);
+                    Console.WriteLine("This letter was already entered");
+                    Thread.Sleep(500);
                     Console.Clear();
                     continue;
                 }
@@ -68,9 +68,9 @@ namespace HangMan_working_version_
                     tries--;
                     if (tries > 0)
                     {
-                        Console.WriteLine($" The letter {key} is not in the word. You have {tries} left.");
-                        Thread.Sleep(1000);
-                        Console.Clear();
+                        Console.WriteLine($"The letter {key} is not in the word. You have {tries} left.");
+                        Thread.Sleep(500);
+                        Console.Clear();  
                     }
                 }
             }
@@ -85,52 +85,76 @@ namespace HangMan_working_version_
                 Console.WriteLine($"You lost! The word was {chosenWord}.");
                 Thread.Sleep(2000);
                 Console.Clear();
-
-            }
-            
+            }          
         }
-        int stage = 0;
-        string[] stage1 =
+        
+        public static void DrawStage(int stage)
         {
-                "  +---+  ",
-                "  |   |  ",
-                "      |  ",
-                "      |  ",
-                "      |  ",
-                "      |  ",
-                "========="
-        };
-        string[] stage2 =
-        {
-                "  +---+  ",
-                "  |   |  ",
-                "  O   |  ",
-                "      |  ",
-                "      |  ",
-                "      |  ",
-                "========="
+            
 
-        };
-        string[] stage3 =
-        {
+            string[] stage1 =
+            {
                 "  +---+  ",
                 "  |   |  ",
-                "  O   |  ",
-                " /|\\ |  ",
+                "      |  ",
+                "      |  ",
                 "      |  ",
                 "      |  ",
                 "========="
-        };
-        string[] stage4 =
-        {
-            "  +---+  ",
-            "  |   |  ",
-            "  O   |  ",
-            " /|\\ |  ",
-            " / \\ |  ",
-            "      |  ",
-            "      |  ",
-            "=========",
-        };
+            };
+            string[] stage2 =
+            {
+                    "  +---+  ",
+                    "  |   |  ",
+                    "  O   |  ",
+                    "      |  ",
+                    "      |  ",
+                    "      |  ",
+                    "========="
+
+            };
+            string[] stage3 =
+            {
+                    "  +---+  ",
+                    "  |   |  ",
+                    "  O   |  ",
+                    " /|\\  |  ",
+                    "      |  ",
+                    "      |  ",
+                    "========="
+            };
+            string[] stage4 =
+            {
+                "  +---+  ",
+                "  |   |  ",
+                "  O   |  ",
+                " /|\\  |  ",
+                " / \\  |  ",
+                "      |  ",
+                "      |  ",
+                "=========",
+            };
+            if (stage == 4)
+            {
+                for (int i = 0; i < stage1.Length; i++)
+                    Console.WriteLine(stage1[i]);
+            }
+            else if (stage == 3)
+            {
+                for (int i = 0; i < stage1.Length; i++)
+                    Console.WriteLine(stage2[i]);
+            }
+            else if (stage == 2)
+            {
+                for (int i = 0; i < stage1.Length; i++)
+                    Console.WriteLine(stage3[i]);
+            }
+            else if (stage == 1)
+            {
+                for (int i = 0; i < stage1.Length; i++)
+                    Console.WriteLine(stage4[i]);
+            }
+        }
+
     }
 }
